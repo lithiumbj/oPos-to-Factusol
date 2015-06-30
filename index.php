@@ -1,5 +1,10 @@
 <?php
 
+define(HOST, "localhost");
+define(USERNAME, "root");
+define(DBPASSWORD, "attime7931");
+define(DBNAME, "pos");
+
 $cliCounter = 1;
 $ticketCounter = 1;
 $linesCounter = 1;
@@ -18,7 +23,7 @@ $excelLines = $excelLines->load('white.xls');
 
 
 //Declarar conexion mysqli
-$mysqli = new mysqli("localhost", "root", "attime7931", "pos");
+$mysqli = new mysqli(HOST, USERNAME, DBPASSWORD, DBNAME);
 if ($mysqli->connect_errno) {
     echo "Falló la conexión con MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
@@ -32,7 +37,7 @@ while ($fila = $resultado->fetch_assoc()) {
 }
 //Write clients
 $objWriter = PHPExcel_IOFactory::createWriter($excel2, 'Excel5');
-$objWriter->save('PRO.xls');
+$objWriter->save('./output/PRO.xls');
 /*
  * Crea un cliente en el csv de clientes
  */
@@ -101,8 +106,8 @@ function createTicketsForUser() {
     }
     //Write tickets
     $objWriter = PHPExcel_IOFactory::createWriter($excelTickets, 'Excel5');
-    $objWriter->save('FRE.xls');
+    $objWriter->save('./output/FRE.xls');
     //Write tickets Lines
     $objWriter = PHPExcel_IOFactory::createWriter($excelLines, 'Excel5');
-    $objWriter->save('LFR.xls');
+    $objWriter->save('./output/LFR.xls');
 }
